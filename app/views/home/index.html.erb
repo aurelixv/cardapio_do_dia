@@ -1,1 +1,8 @@
-<h1>BEM VINDOS AO MEU WEBSITE MUAHAHAHA</h1>
+<div class="container-fluid">
+  <% if notice && current_user.present? %>
+    <div class="alert alert-success" role="alert">
+      <p id="notice"><%= notice %>, <%= current_user.name%></p>
+    </div>
+  <% end %>
+  <h1 class="display-4">Sejam bem vindos ao Cardapio do Dia!</h1>
+</div>
