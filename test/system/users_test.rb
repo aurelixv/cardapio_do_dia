@@ -21,7 +21,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in "Telephone", with: @user.telephone
     click_on "Create User"
 
-    assert_text "User was successfully created"
+    assert_text "Perfil criado com sucesso."
     click_on "Back"
   end
 
@@ -36,7 +36,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in "Telephone", with: @user.telephone
     click_on "Update User"
 
-    assert_text "User was successfully updated"
+    assert_text "Perfil atualizado com sucesso."
     click_on "Back"
   end
 
@@ -46,6 +46,6 @@ class UsersTest < ApplicationSystemTestCase
       click_on "Destroy", match: :first
     end
 
-    assert_text "User was successfully destroyed"
+    assert_text "Perfil apagado com sucesso."
   end
 end

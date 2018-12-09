@@ -11,32 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label "Nome", to: "name" %>
+    <%= form.text_field :name, class: "form-control", id: "name" %>
   </div>
 
-  <div class="field">
-    <%= form.label :telephone %>
-    <%= form.text_field :telephone %>
+  <div class="form-group">
+    <%= form.label "Telefone", to: "telephone" %>
+    <%= form.text_field :telephone, class: "form-control", id: "telephone" %>
   </div>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <%= form.label "E-mail", to: "email" %>
+    <%= form.email_field :email, class: "form-control", id: "email" %>
   </div>
 
-  <div class="field">
-    <%= form.label :login %>
-    <%= form.text_field :login %>
-  </div>
+  <%= form.submit "Atualizar", class: "btn btn-primary"%>
+  <a href="/profile" class="btn btn-secondary">Cancelar</a>
+  <a href="" class="btn btn-danger float-right">Apagar</a>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

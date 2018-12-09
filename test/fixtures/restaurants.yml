@@ -8,6 +8,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  manager_id  :bigint(8)
+#  telephone   :string
+#  email       :string
+#  address     :string
+#  food_type   :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

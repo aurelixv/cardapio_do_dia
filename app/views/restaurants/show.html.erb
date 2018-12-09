@@ -1,14 +1,46 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
-</p>
+<h1><%= @restaurant.name %></h1>
 
-<p>
-  <strong>Description:</strong>
-  <%= @restaurant.description %>
-</p>
+<table class="table table-bordered">
+  <thead>
+    <tr scope="row">Dados cadastrais</tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Nome</th>
+      <td><%= @restaurant.name %></td>
+    </tr>
+    <tr>
+      <th scope="row">Descricao</th>
+      <td><%= @restaurant.description %></td>
+    </tr>
+    <tr>
+      <th scope="row">Telefone</th>
+      <td><%= @restaurant.telephone %></td>
+    </tr>
+    <tr>
+      <th scope="row">E-mail</th>
+      <td><%= @restaurant.email %></td>
+    </tr>
+    <tr>
+      <th scope="row">Endereco</th>
+      <td><%= @restaurant.address %></td>
+    </tr>
+    <tr>
+      <th scope="row">Culinaria</th>
+      <td><%= @restaurant.food_type %></td>
+    </tr>
+    <% if @restaurant.manager.present?%>
+      <% if @restaurant.manager.user.present? %>
+        <tr>
+          <th scope="row">Gerente</th>
+          <td><%= @restaurant.manager.user.name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to 'Back', restaurants_path %>
+<%= link_to 'Editar', edit_restaurant_path(@restaurant), class: "btn btn-primary" %>
+<a href="/profile" class="btn btn-secondary">Voltar</a>

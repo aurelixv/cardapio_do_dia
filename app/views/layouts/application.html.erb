@@ -5,7 +5,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <%= stylesheet_link_tag "bootstrap-social" %>
+    <%= stylesheet_link_tag "font-awesome" %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -32,22 +33,43 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+              Opcoes
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <% if user_signed_in? %>
+                <a class="dropdown-item" href="/restaurants/new">Tornar-se um gerente</a>
+                <a class="dropdown-item" href="#">Another action</a>
+              <% else %>
+                <a href="/users/sign_in" class="dropdown-item">Entre para mais opcoes</a>
+              <% end %>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="/about">Sobre</a>
             </div>
           </li>
         </ul>
 
-        <a data-method="delete" class="nav-item nav-link text-danger" href="/users/sign_out">Sair</a>
+        <a data-method="delete" class="nav-item nav-link btn btn-danger" href="/users/sign_out">Sair</a>
       </div>
     </nav>
     <br>
-    <%= yield %>
 
+    <main role="main" class="container">
+      <%= yield %>
+    </main>
+
+  <div class="footer-margin">
+  <footer class="card-footer bg-dark footer-font-style text-muted footer-position">
+      <div class="container">
+        <span class="text-muted">Cardapio do Dia, feito por Aurelio Vinicius. CSM41 - Desenvolvimento de Aplicacoes Web UTFPR 2018/2.</span>
+        <!--
+        TODO: github icon link
+        <a class="btn btn-social-icon btn-github float-right">
+          <span class="fa fa-github"></span>
+        </a>
+        -->
+      </div>
+  </footer>
+  </div>
   </body>
 </html>
+

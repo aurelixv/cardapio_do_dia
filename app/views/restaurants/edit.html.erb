@@ -1,6 +1,33 @@
 <h1>Editing Restaurant</h1>
 
-<%= render 'form', restaurant: @restaurant %>
+<<%= form_with(model: @restaurant, local: true) do |form| %>
+  <% if @restaurant.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@restaurant.errors.count, "error") %> prohibited this restaurant from being saved:</h2>
+
+      <ul>
+      <% @restaurant.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name, to: "name" %>
+    <%= form.text_field :name, class: "form-control", id: "name" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, to: "description" %>
+    <%= form.text_field :description, class: "form-control", id: "name" %>
+  </div>
+
+  
+  <%= form.submit "Salvar", class: "btn btn-primary"%>
+  <a href="/profile" class="btn btn-secondary">Cancelar</a>
+  
+<% end %>
 
 <%= link_to 'Show', @restaurant %> |
 <%= link_to 'Back', restaurants_path %>

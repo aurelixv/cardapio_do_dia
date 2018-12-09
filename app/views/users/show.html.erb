@@ -1,24 +1,45 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+  <% if notice %>
+    <div class="alert alert-success" role="alert">
+      <p id="notice"><%= notice %></p>
+    </div>
+  <% end %>
 
-<p>
-  <strong>Telephone:</strong>
-  <%= @user.telephone %>
-</p>
+  <h1>Perfil</h1>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+  <table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th scope="row">Nome</th>
+      <td><%= @user.name %> 
+      <% if @user.manager.present? %>
+        <span class="badge badge-danger">Gerente</span>
+      <% elsif @user.employee.present? %>
+        <span class="badge badge-warning">Funcionario</span>
+      <% else %>
+        <span class="badge badge-success">Usuario</span>
+      <% end %> 
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Telefone</th>
+      <td><%= @user.telephone %></td>
+    </tr>
+    <tr>
+      <th scope="row">E-mail</th>
+      <td><%= @user.email %></td>
+    </tr>
+    <% if @user.manager.present?%>
+      <% if @user.manager.restaurant.present? %>
+        <tr>
+          <th scope="row">Restaurante</th>
+          <td><a href="/restaurants/<%= @user.manager.restaurant.id %>"><%= @user.manager.restaurant.name %></a></td>
+        </tr>
+      <% end %>
+    <% end %>
 
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
+  </tbody>
+</table>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+  <%= link_to 'Editar', edit_user_path(@user), class: "btn btn-primary" %>
+

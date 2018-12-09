@@ -19,9 +19,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :managers
-  has_many :employees
+  has_one :manager
+  has_one :employee
 
   validates :name, presence: true
-
 end

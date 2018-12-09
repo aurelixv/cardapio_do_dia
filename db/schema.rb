@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_09_015732) do
+ActiveRecord::Schema.define(version: 2018_12_09_065040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,12 +49,22 @@ ActiveRecord::Schema.define(version: 2018_12_09_015732) do
     t.index ["restaurant_id"], name: "index_menus_on_restaurant_id"
   end
 
+  create_table "restaurant_menus", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "manager_id"
+    t.string "telephone"
+    t.string "email"
+    t.string "address"
+    t.string "food_type"
     t.index ["manager_id"], name: "index_restaurants_on_manager_id"
   end
 
@@ -68,6 +78,7 @@ ActiveRecord::Schema.define(version: 2018_12_09_015732) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.index ["email", "encrypted_password"], name: "index_users_on_email_and_encrypted_password"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

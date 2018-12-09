@@ -1,8 +1,7 @@
-<div class="container-fluid">
-  <% if notice && current_user.present? %>
-    <div class="alert alert-success" role="alert">
-      <p id="notice"><%= notice %>, <%= current_user.name%></p>
+<% if notice %>
+    <div class="alert alert-warning" role="alert">
+      <p id="notice"><%= notice %></p>
     </div>
   <% end %>
-  <h1 class="display-4">Sejam bem vindos ao Cardapio do Dia!</h1>
-</div>
+
+<h1 class="display-4">Sejam bem vindos ao Cardapio do Dia!</h1>

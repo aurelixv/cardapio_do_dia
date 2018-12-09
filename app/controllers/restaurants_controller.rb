@@ -24,19 +24,30 @@ class RestaurantsController < ApplicationController
   # POST /restaurants
   # POST /restaurants.json
   def create
-    @restaurant = Restaurant.new(restaurant_params)
+    if current_user.manager.present?
+      flash.now[:notice] = 'Nao pode gerenciar mais de um restaurante.'
+      render :new
+      return
+    end
 
+    @restaurant = Restaurant.new(restaurant_params)
+    manager = Manager.new
+    @restaurant.manager = manager
+    
     respond_to do |format|
       if @restaurant.save
         format.html { redirect_to @restaurant, notice: 'Restaurant was successfully created.' }
         format.json { render :show, status: :created, location: @restaurant }
+        current_user.manager = manager
+        manager.save
       else
+        flash.now[:notice] = 'Campos obrigatorios em branco.'
         format.html { render :new }
         format.json { render json: @restaurant.errors, status: :unprocessable_entity }
       end
     end
   end
-
+  
   # PATCH/PUT /restaurants/1
   # PATCH/PUT /restaurants/1.json
   def update
@@ -69,6 +80,6 @@ class RestaurantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
-      params.require(:restaurant).permit(:name, :description)
+      params.require(:restaurant).permit(:name, :description, :telephone, :email, :address, :food_type)
     end
 end

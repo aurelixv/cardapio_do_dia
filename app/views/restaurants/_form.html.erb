@@ -11,17 +11,18 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, to: "name" %>
+    <%= form.text_field :name, class: "form-control", id: "name" %>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
+  <div class="form-group">
+    <%= form.label :description, to: "description" %>
+    <%= form.text_field :description, class: "form-control", id: "name" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  
+  <%= form.submit "Salvar", class: "btn btn-primary"%>
+  <a href="/profile" class="btn btn-secondary">Cancelar</a>
+  
 <% end %>
