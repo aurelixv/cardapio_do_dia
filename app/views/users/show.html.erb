@@ -33,7 +33,7 @@
       <% if @user.manager.restaurant.present? %>
         <tr>
           <th scope="row">Restaurante</th>
-          <td><a href="/restaurants/<%= @user.manager.restaurant.id %>"><%= @user.manager.restaurant.name %></a></td>
+          <td><a href="/restaurant"><%= @user.manager.restaurant.name %></a></td>
         </tr>
       <% end %>
     <% end %>

@@ -72,6 +72,15 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  def profile
+    if user_signed_in? && current_user.restaurant.present?
+      @restaurant = current_user.restaurant
+      render :show
+    else
+      redirect_to "/"
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant

@@ -21,6 +21,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :manager
   has_one :employee
+  has_one :restaurant, through: :manager if :has_manager
+  has_one :restaurant, through: :manager if :has_employee
 
   validates :name, presence: true
+
+  def has_manager
+    self.manager.present ? true : false
+  end
+
+  def has_employee
+    self.employee.present? ? true : false
+  end
 end
