@@ -1,10 +1,4 @@
 
-  <% if notice %>
-    <div class="alert alert-success" role="alert">
-      <p id="notice"><%= notice %></p>
-    </div>
-  <% end %>
-
   <h1>Perfil</h1>
 
   <table class="table table-bordered">
@@ -29,11 +23,18 @@
       <th scope="row">E-mail</th>
       <td><%= @user.email %></td>
     </tr>
-    <% if @user.manager.present?%>
-      <% if @user.manager.restaurant.present? %>
+    <% if @user.manager.present? %>
+      <% if @user.restaurant.present? %>
         <tr>
           <th scope="row">Restaurante</th>
-          <td><a href="/restaurant"><%= @user.manager.restaurant.name %></a></td>
+          <td><a href="/restaurant"><%= @user.restaurant.name %></a></td>
+        </tr>
+      <% end %>
+    <% elsif @user.employee.present? %>
+      <% if @user.employee.restaurant.present? %>
+        <tr>
+          <th scope="row">Restaurante</th>
+          <td><a href="/restaurant"><%= @user.employee.restaurant.name %></a></td>
         </tr>
       <% end %>
     <% end %>

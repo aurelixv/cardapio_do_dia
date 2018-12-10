@@ -1,12 +1,5 @@
 <h1>Registrar restaurante</h1>
 
-
-<% if notice %>
-  <div class="alert alert-danger" role="alert">
-    <p id="notice"><%= notice %></p>
-  </div>
-<% end %>
-
 <%= form_with(model: @restaurant, local: true) do |form| %>
 
   <div class="form-group">

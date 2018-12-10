@@ -11,12 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label "Nome" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label "Descricao" %>
+    <%= form.text_area :description, class: "form-control" %>
   </div>
+
+  <%= form.submit "Salvar", class: "btn btn-success" %>
+  <a href="/item" class="btn btn-secondary">Cancelar</a>
+
 <% end %>

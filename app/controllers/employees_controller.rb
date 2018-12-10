@@ -25,10 +25,13 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    user = User.find(params[:user_id])
+    @employee.user_id = user.id
+    @employee.restaurant_id = current_user.restaurant.id
 
     respond_to do |format|
       if @employee.save
-        format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
+        format.html { redirect_to "/employee", notice: 'Funcionario contratado com sucesso.' }
         format.json { render :show, status: :created, location: @employee }
       else
         format.html { render :new }
@@ -61,6 +64,16 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def profile
+    if user_signed_in? and current_user.restaurant.present? and current_user.manager.present?
+      @employees = Employee.all.where(restaurant_id: current_user.restaurant.id).order(:id)
+      @users = User.all.order(:id)
+      render "show.html.erb"
+    else
+      redirect_to "/restaurant", notice: "Apenas gerentes podem acessar essa tela."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
@@ -69,6 +82,6 @@ class EmployeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.fetch(:employee, {})
+      params.permit(:user_id)
     end
 end

@@ -1,4 +1,95 @@
-<p id="notice"><%= notice %></p>
+<h1><%= current_user.restaurant.name %></h1>
+<nav aria-label="...">
+  <ul class="pagination pagination-lg">
+    <li class="page-item"><a class="page-link" href="/employees">Dados cadastrais</a></li>
+    <li class="page-item"><a class="page-link" href="/item">Menus e pratos</a></li>
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Funcionarios</a>
+    </li>
+  </ul>
+</nav>
 
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Funcionarios</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Contratar</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <h2>Funcionarios</h2>
+
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">E-mail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @employees.each_with_index() do |employee, i| %>
+          <tr>
+            <th scope="row"><%= i + 1 %></th>
+            <td><%= employee.user.name %></td>
+            <td><%= employee.user.telephone %></td>
+            <td><%= employee.user.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+    <a href="/restaurant" class="btn btn-secondary">Voltar</a>
+
+  </div>
+
+  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+    <h2>Contratar</h2>
+
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">E-mail</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%
+          i = 1 
+          @users.each do |user| 
+        %>
+          <% if user.manager.nil? and user.employee.nil? %>
+            <tr>
+              <th scope="row"><%= i %></th>
+              <td><%= user.name %></td>
+              <td><%= user.telephone %></td>
+              <td><%= user.email %></td>
+              <td>
+                <form action="/employees" method="post">
+                  <input type="hidden" name="user_id" value="<%= user.id %>">
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                  <input type="submit" class="btn btn-success btn-block" value="Contratar">
+                </form>
+              </td>
+            </tr>
+            <% i += 1 %>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+    <a href="/restaurant" class="btn btn-secondary">Voltar</a>
+
+  </div>

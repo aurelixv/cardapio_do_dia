@@ -19,18 +19,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :manager
   has_one :employee
-  has_one :restaurant, through: :manager if :has_manager
-  has_one :restaurant, through: :manager if :has_employee
+  has_one :manager
+  has_one :restaurant, through: :manager
 
   validates :name, presence: true
-
-  def has_manager
-    self.manager.present ? true : false
-  end
-
-  def has_employee
-    self.employee.present? ? true : false
-  end
 end

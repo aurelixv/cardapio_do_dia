@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" style="overflow-y: scroll;">
   <head>
     <title>CardapioDoDia</title>
     <%= csrf_meta_tags %>
@@ -36,9 +36,10 @@
               Opcoes
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% if user_signed_in? %>
+              <% if (user_signed_in? && current_user.restaurant.nil?) && !current_user.employee.present? %>
                 <a class="dropdown-item" href="/restaurants/new">Tornar-se um gerente</a>
-                <a class="dropdown-item" href="#">Another action</a>
+              <% elsif user_signed_in? %>
+                <a class="dropdown-item" href="/restaurant">Gerenciar restaurante</a>
               <% else %>
                 <a href="/users/sign_in" class="dropdown-item">Entre para mais opcoes</a>
               <% end %>
@@ -54,6 +55,11 @@
     <br>
 
     <main role="main" class="container">
+      <% if notice %>
+        <div class="alert alert-primary" role="alert">
+          <p id="notice"><%= notice %></p>
+        </div>
+      <% end %>
       <%= yield %>
     </main>
 
@@ -61,7 +67,7 @@
     <br><br><br><br><br><br><br><br>
 
   <div class="footer-margin">
-  <footer class="card-footer bg-dark footer-font-style text-muted footer-position">
+  <footer class="card-footer bg-dark footer-font-style text-muted footer-position" style="text-align:center">
       <div class="container">
         <span class="text-muted">Cardapio do Dia, feito por Aurelio Vinicius. CSM41 - Desenvolvimento de Aplicacoes Web UTFPR 2018/2.</span>
         <!--

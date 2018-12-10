@@ -19,6 +19,9 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1/edit
   def edit
+    if current_user.employee.present?
+      redirect_to "/restaurant", notice: "Apenas gerentes podem editar dados cadastrais."
+    end
   end
 
   # POST /restaurants
@@ -36,10 +39,11 @@ class RestaurantsController < ApplicationController
     
     respond_to do |format|
       if @restaurant.save
-        format.html { redirect_to @restaurant, notice: 'Restaurant was successfully created.' }
-        format.json { render :show, status: :created, location: @restaurant }
         current_user.manager = manager
         manager.save
+        current_user.save
+        format.html { redirect_to "/restaurant", notice: 'Restaurante criado com sucesso.' }
+        format.json { render :show, status: :created, location: @restaurant }
       else
         flash.now[:notice] = 'Campos obrigatorios em branco.'
         format.html { render :new }
@@ -53,7 +57,7 @@ class RestaurantsController < ApplicationController
   def update
     respond_to do |format|
       if @restaurant.update(restaurant_params)
-        format.html { redirect_to @restaurant, notice: 'Restaurant was successfully updated.' }
+        format.html { redirect_to @restaurant, notice: 'Restaurante atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @restaurant }
       else
         format.html { render :edit }
@@ -73,11 +77,22 @@ class RestaurantsController < ApplicationController
   end
 
   def profile
-    if user_signed_in? && current_user.restaurant.present?
-      @restaurant = current_user.restaurant
-      render :show
+    if user_signed_in?
+      if current_user.restaurant.present?
+        @restaurant = current_user.restaurant
+        render :show
+      elsif current_user.employee.present?
+        if current_user.employee.restaurant.present?
+          @restaurant = current_user.employee.restaurant
+          render :show
+        else
+          redirect_to root_path
+        end
+      else
+        redirect_to root_path
+      end
     else
-      redirect_to "/"
+      redirect_to root_path
     end
   end
 

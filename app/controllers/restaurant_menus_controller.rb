@@ -25,10 +25,12 @@ class RestaurantMenusController < ApplicationController
   # POST /restaurant_menus.json
   def create
     @restaurant_menu = RestaurantMenu.new(restaurant_menu_params)
+    @restaurant_menu.restaurant = current_user.restaurant if current_user.manager.present?
+    @restaurant_menu.restaurant = current_user.employee.restaurant if current_user.employee.present?
 
     respond_to do |format|
       if @restaurant_menu.save
-        format.html { redirect_to @restaurant_menu, notice: 'Restaurant menu was successfully created.' }
+        format.html { redirect_to "/item", notice: 'Cardapio criado com sucesso.' }
         format.json { render :show, status: :created, location: @restaurant_menu }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class RestaurantMenusController < ApplicationController
   def update
     respond_to do |format|
       if @restaurant_menu.update(restaurant_menu_params)
-        format.html { redirect_to @restaurant_menu, notice: 'Restaurant menu was successfully updated.' }
+        format.html { redirect_to @restaurant_menu, notice: 'Cardapio atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @restaurant_menu }
       else
         format.html { render :edit }

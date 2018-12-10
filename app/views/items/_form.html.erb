@@ -11,17 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label "Nome" %>
+    <%= form.text_field :name, class: "form-control", id: "name" %>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label "Descricao" %>
+    <%= form.text_area :description, class: "form-control", id: "name" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label "Data" %>
+    <%= form.date_field :dish_date, class: "form-control", id: "name" %>
   </div>
+
+  <div class="form-group">
+    <%= form.label "Tipo" %>
+    <%= form.text_field :food_type, class: "form-control", id: "name" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "Preco" %>
+    <%= form.number_field :price, class: "form-control", id: "name" %>
+  </div>
+
+  <%= form.submit "Salvar", class: "btn btn-success" %>
+  <a href="/item" class="btn btn-secondary">Cancelar</a>
+
 <% end %>
