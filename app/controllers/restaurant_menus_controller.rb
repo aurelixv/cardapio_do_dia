@@ -44,7 +44,7 @@ class RestaurantMenusController < ApplicationController
   def update
     respond_to do |format|
       if @restaurant_menu.update(restaurant_menu_params)
-        format.html { redirect_to @restaurant_menu, notice: 'Cardapio atualizado com sucesso.' }
+        format.html { redirect_to "/item", notice: 'Cardapio atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @restaurant_menu }
       else
         format.html { render :edit }
@@ -71,6 +71,6 @@ class RestaurantMenusController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_menu_params
-      params.require(:restaurant_menu).permit(:name)
+      params.require(:restaurant_menu).permit(:name, :description)
     end
 end

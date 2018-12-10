@@ -1,2 +1,24 @@
 
 <h1 class="display-4">Sejam bem-vindos ao Cardapio do Dia!</h1>
+
+  <br>
+  <% if @pratos.empty? %>
+    <h2 class="text-muted">Nao encontramos nada!</h2>
+  <% end %>
+  <% @pratos.each do |prato| %>
+  <a href="/prato/<%= prato.id %>" style="text-decoration: none; color: inherit;">
+  <div class="card border-dark">
+    <% if prato.avatar.attachment.present?%>
+      <img class="card-img-top" src="<%= url_for(prato.avatar.variant(combine_options: { auto_orient: true, gravity: "center", resize: "820x420^", crop: "820x420+0+0" })) %>" alt="Card image cap">
+    <% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= prato.name %></h5>
+      <p class="card-text"><%= prato.description %></p>
+      <p class="card-text"><small class="text-muted"><%= prato.dish_date if prato.dish_date.present? %></small></p>
+    </div>
+  </div>
+  </a>
+  <br>
+  <% end %>
+
+</div>

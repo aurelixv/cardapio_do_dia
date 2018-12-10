@@ -48,8 +48,11 @@
             </div>
           </li>
         </ul>
-
-        <a data-method="delete" class="nav-item nav-link btn btn-danger" href="/users/sign_out">Sair</a>
+        <form action="/search" method="get" class="form-inline">
+          <input class="form-control mr-sm-2" type="input" placeholder="Procurar" aria-label="Search" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <a data-method="delete" class="btn btn-outline-danger" href="/users/sign_out">  Sair</a>
       </div>
     </nav>
     <br>

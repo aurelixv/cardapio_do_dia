@@ -36,6 +36,13 @@
     <%= form.number_field :price, class: "form-control", id: "name" %>
   </div>
 
+  <div class="form-group">
+    <%= form.label "Foto" %>
+    <%= form.file_field :avatar, class: "form-control-file" %>
+  </div>
+
+  <br>
+
   <%= form.submit "Salvar", class: "btn btn-success" %>
   <a href="/item" class="btn btn-secondary">Cancelar</a>
 

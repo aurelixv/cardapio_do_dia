@@ -67,3 +67,6 @@ gem 'devise'
 # Bootstrap, to beautify things :)
 gem 'bootstrap'
 gem 'jquery-rails'
+
+# Image processor, to resize whenever we want to it maaan
+gem 'image_processing', '~> 1.2'

@@ -31,6 +31,7 @@
           <th scope="col">Dia</th>
           <th scope="col">Tipo</th>
           <th scope="col">Preco</th>
+          <th scope="col">Foto</th>
         </tr>
       </thead>
       <tbody>
@@ -42,6 +43,13 @@
             <td><%= item.dish_date %></td>
             <td><%= item.food_type %></td>
             <td><%= item.price %></td>
+            <td>
+              <% if item.avatar.attachment.present? %>
+                <!--<img src="<%= url_for(item.avatar) %>" class="img-fluid" alt="Responsive image">-->
+                <%= image_tag item.avatar.variant(combine_options: { auto_orient: true, gravity: "center", resize: "100x100^", crop: "100x100+0+0" }) 
+                %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
