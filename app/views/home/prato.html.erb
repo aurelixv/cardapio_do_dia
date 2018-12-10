@@ -2,5 +2,39 @@
 
 <%= image_tag @prato.avatar.variant(combine_options: { auto_orient: true, gravity: "center", resize: "800x300^", crop: "800x300+0+0" }) 
 %>
-<br>
+<br><br>
 <p><strong>Restaurante:</strong>  <%= @prato.restaurant.name %></p>
+<p><strong>Descricao:</strong>  <%= @prato.description %></p>
+<p><strong>Preco:</strong>  R$<%= number_with_precision(@prato.price, precision: 2) %></p>
+<p><strong>Curtidas:</strong> <%= @prato.likes.count %>
+  <% if user_signed_in? %>
+    <a href="/prato/<%= @prato.id %>/like" class="btn btn-success">Curtir</a>
+  <% end %>
+</p>
+<h2>Comentarios</h2>
+<% if @prato.comments.present? %>
+  <% @prato.comments.each_with_index() do |comment, i| %>
+    <p>
+      <strong>
+      <%= i + 1 %> | 
+      <%= comment.user.name if comment.user.present? %> comentou em  
+      <%= comment.created_at.strftime("%F as %T") %>: 
+      </strong>
+      <%= comment.comment %>
+    </p>
+  <% end %>
+<% else %>
+<p class="text-muted">Nenhum comentario ainda.</p>
+<% end %>
+<% if user_signed_in? %>
+  <form action="" method="post">
+    <div class="form-group">
+      <label for="comment">Deixe o seu comentario</label>
+      <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+    </div>
+    <button type="submit" class="btn btn-primary">Comentar</button>
+  </form>
+<% else %>
+  <p class="text-muted">Faca login para poder comentar.</p>
+<% end %>

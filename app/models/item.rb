@@ -18,6 +18,9 @@ class Item < ApplicationRecord
   belongs_to :restaurant
   belongs_to :restaurant_menu, optional: :true
 
+  has_many :comments
+  has_many :likes
+
   has_one_attached :avatar
 
   validates :restaurant_id, presence: :true

@@ -23,5 +23,8 @@ class User < ApplicationRecord
   has_one :manager
   has_one :restaurant, through: :manager
 
+  has_many :comments
+  has_many :likes
+
   validates :name, presence: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_023847) do
+ActiveRecord::Schema.define(version: 2018_12_10_160353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 2018_12_10_023847) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "comment"
+    t.bigint "item_id"
+    t.bigint "user_id"
+    t.index ["item_id"], name: "index_comments_on_item_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "employees", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -43,6 +53,11 @@ ActiveRecord::Schema.define(version: 2018_12_10_023847) do
     t.bigint "restaurant_id"
     t.index ["restaurant_id"], name: "index_employees_on_restaurant_id"
     t.index ["user_id"], name: "index_employees_on_user_id"
+  end
+
+  create_table "indications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "items", force: :cascade do |t|
@@ -57,6 +72,15 @@ ActiveRecord::Schema.define(version: 2018_12_10_023847) do
     t.bigint "restaurant_menu_id_id"
     t.index ["restaurant_id"], name: "index_items_on_restaurant_id"
     t.index ["restaurant_menu_id_id"], name: "index_items_on_restaurant_menu_id_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "item_id"
+    t.bigint "user_id"
+    t.index ["item_id"], name: "index_likes_on_item_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "managers", force: :cascade do |t|
@@ -111,9 +135,13 @@ ActiveRecord::Schema.define(version: 2018_12_10_023847) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "items"
+  add_foreign_key "comments", "users"
   add_foreign_key "employees", "restaurants"
   add_foreign_key "employees", "users"
   add_foreign_key "items", "restaurants"
+  add_foreign_key "likes", "items"
+  add_foreign_key "likes", "users"
   add_foreign_key "managers", "users"
   add_foreign_key "menus", "restaurants"
   add_foreign_key "restaurant_menus", "restaurants"

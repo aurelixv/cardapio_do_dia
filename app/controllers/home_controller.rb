@@ -11,12 +11,45 @@ class HomeController < ApplicationController
   end
 
   def search
-    @pratos = Item.all.where("lower(food_type) LIKE CONCAT('%',?,'%') OR lower(description) LIKE CONCAT('%',?,'%') OR lower(name) LIKE CONCAT('%',?,'%')", params[:search].downcase, params[:search].downcase, params[:search].downcase)
+    @pratos = Item.all.where("lower(food_type) LIKE CONCAT('%',?,'%') OR lower(description) LIKE CONCAT('%',?,'%') OR lower(name) LIKE CONCAT('%',?,'%') OR cast(price as varchar(20)) LIKE CONCAT('%',?,'%')", params[:search].downcase, params[:search].downcase, params[:search].downcase, params[:search])
     render "index.html.erb"
   end
 
   def prato
     @prato = Item.find(params[:id])
+  end
+
+  def comment
+    @prato = Item.find(params[:id])
+    comment = Comment.new
+    comment.item = @prato
+    comment.comment = params[:comment]
+    comment.user = current_user
+    if comment.save
+      respond_to do |format|
+        format.html { render "prato.html.erb", notice: "Comentario salvo com sucesso." }
+      end
+    else
+      respond_to do |format|
+        format.html { render "prato.html.erb", notice: "Erro ao salvar o comentario." }
+      end
+    end
+  end
+
+  def like
+    prato = Item.find(params[:id])
+    like = Like.new
+    like.item = prato
+    like.user = current_user
+    if like.save
+      respond_to do |format|
+        format.html { redirect_to "/prato/#{prato.id}" }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to "/prato/#{prato.id}" }
+      end
+    end
   end
 
 end
