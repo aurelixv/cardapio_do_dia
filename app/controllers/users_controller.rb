@@ -66,7 +66,7 @@ class UsersController < ApplicationController
       @user = current_user
       render "users/show.html.erb"
     else
-      redirect_to "/"
+      redirect_to root_path
     end
   end
 

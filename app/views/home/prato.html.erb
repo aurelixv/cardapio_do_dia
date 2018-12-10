@@ -8,7 +8,10 @@
 <p><strong>Preco:</strong>  R$<%= number_with_precision(@prato.price, precision: 2) %></p>
 <p><strong>Curtidas:</strong> <%= @prato.likes.count %>
   <% if user_signed_in? %>
-    <a href="/prato/<%= @prato.id %>/like" class="btn btn-success">Curtir</a>
+    <a href="/prato/<%= @prato.id %>/like" class="btn btn-success">Curtir</a> 
+    <strong>Reservas: </strong>
+    <%= @prato.bookings.count %>
+    <a href="/prato/<%= @prato.id %>/reserva" class="btn btn-warning">Reservar</a>
   <% end %>
 </p>
 <h2>Comentarios</h2>

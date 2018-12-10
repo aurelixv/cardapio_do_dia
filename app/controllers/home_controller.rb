@@ -52,4 +52,16 @@ class HomeController < ApplicationController
     end
   end
 
+  def book
+    @prato = Item.find(params[:id])
+    book = Booking.new
+    book.item = @prato
+    book.user = current_user
+    
+    if book.save
+      redirect_to "/prato/#{prato.id}"
+    else
+      redirect_to root_path
+    end
+  end
 end

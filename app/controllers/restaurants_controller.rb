@@ -96,6 +96,12 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  def book
+    @bookings = current_user.restaurant.items.first.bookings
+    p "@" * 200
+    p @bookings
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant

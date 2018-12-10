@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_one :employee
   has_one :manager
   has_one :restaurant, through: :manager
+  has_many :bookings
 
   has_many :comments
   has_many :likes

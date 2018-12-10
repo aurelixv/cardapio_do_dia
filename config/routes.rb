@@ -14,12 +14,14 @@ Rails.application.routes.draw do
   get "/restaurant", to: "restaurants#profile"
   get "/item", to: "items#profile"
   get "/employee", to: "employees#profile"
+  get "/booking", to: "restaurants#book"
   get "/home", to: "home#index"
   get "/about", to: "home#about"
   get "/search", to: "home#search"
   get "/prato/:id", to: "home#prato"
   post "/prato/:id", to: "home#comment"
   get "/prato/:id/like", to: "home#like"
+  get "/prato/:id/reserva", to: "home#book"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

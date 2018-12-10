@@ -18,6 +18,8 @@ class Item < ApplicationRecord
   belongs_to :restaurant
   belongs_to :restaurant_menu, optional: :true
 
+  has_many :bookings
+
   has_many :comments
   has_many :likes
 
