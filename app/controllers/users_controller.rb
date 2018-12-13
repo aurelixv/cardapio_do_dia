@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :is_signed_in
+  before_action :is_admin, only: [:index]
 
   # GET /users
   # GET /users.json
@@ -62,12 +64,8 @@ class UsersController < ApplicationController
   end
 
   def profile
-    if user_signed_in?
-      @user = current_user
-      render "users/show.html.erb"
-    else
-      redirect_to root_path
-    end
+    @user = current_user
+    render "users/show.html.erb"
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_161317) do
+ActiveRecord::Schema.define(version: 2018_12_13_233125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(version: 2018_12_10_161317) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_admins_on_user_id"
+  end
+
   create_table "bookings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,8 +66,6 @@ ActiveRecord::Schema.define(version: 2018_12_10_161317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.bigint "restaurant_id"
-    t.index ["restaurant_id"], name: "index_employees_on_restaurant_id"
     t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
@@ -126,12 +131,11 @@ ActiveRecord::Schema.define(version: 2018_12_10_161317) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "manager_id"
     t.string "telephone"
     t.string "email"
     t.string "address"
     t.string "food_type"
-    t.index ["manager_id"], name: "index_restaurants_on_manager_id"
+    t.integer "manager_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -144,16 +148,17 @@ ActiveRecord::Schema.define(version: 2018_12_10_161317) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.bigint "restaurant_id"
     t.index ["email", "encrypted_password"], name: "index_users_on_email_and_encrypted_password"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["restaurant_id"], name: "index_users_on_restaurant_id"
   end
 
   add_foreign_key "bookings", "items"
   add_foreign_key "bookings", "users"
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
-  add_foreign_key "employees", "restaurants"
   add_foreign_key "employees", "users"
   add_foreign_key "indications", "items"
   add_foreign_key "indications", "users"
@@ -163,5 +168,4 @@ ActiveRecord::Schema.define(version: 2018_12_10_161317) do
   add_foreign_key "managers", "users"
   add_foreign_key "menus", "restaurants"
   add_foreign_key "restaurant_menus", "restaurants"
-  add_foreign_key "restaurants", "managers"
 end

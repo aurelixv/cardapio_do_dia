@@ -36,7 +36,7 @@
       <th scope="row">Culinaria</th>
       <td><%= @restaurant.food_type %></td>
     </tr>
-    <% if @restaurant.manager.present?%>
+    <% if @restaurant.manager.present? %>
       <% if @restaurant.manager.user.present? %>
         <tr>
           <th scope="row">Gerente</th>
