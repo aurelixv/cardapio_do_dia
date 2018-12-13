@@ -1,5 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
+  before_action :is_signed_in
 
   # GET /employees
   # GET /employees.json
@@ -27,10 +28,11 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
     user = User.find(params[:user_id])
     @employee.user_id = user.id
-    @employee.restaurant_id = current_user.restaurant.id
+    user.restaurant_id = current_user.restaurant.id
 
     respond_to do |format|
       if @employee.save
+        user.save
         format.html { redirect_to "/employee", notice: 'Funcionario contratado com sucesso.' }
         format.json { render :show, status: :created, location: @employee }
       else
@@ -66,7 +68,7 @@ class EmployeesController < ApplicationController
 
   def profile
     if user_signed_in? and current_user.restaurant.present? and current_user.manager.present?
-      @employees = Employee.all.where(restaurant_id: current_user.restaurant.id).order(:id)
+      @employees = Employee.all.joins(:user).where(users: { restaurant_id: current_user.restaurant.id })
       @users = User.all.order(:id)
       render "show.html.erb"
     else

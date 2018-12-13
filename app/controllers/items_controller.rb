@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :is_signed_in
 
   # GET /items
   # GET /items.json
@@ -26,9 +27,7 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
     @item = Item.new(item_params)
-    @item.restaurant = current_user.restaurant if current_user.manager.present?
-    @item.restaurant = current_user.employee.restaurant if current_user.employee.present?
-
+    @item.restaurant = current_user.restaurant
 
     respond_to do |format|
       if @item.save
@@ -66,19 +65,10 @@ class ItemsController < ApplicationController
   end
 
   def profile
-    if user_signed_in? and current_user.restaurant.present?
-      @items = current_user.restaurant.items.all.order(:id)
-      @restaurant_menus = current_user.restaurant.restaurant_menus.all.order(:id)
-      @restaurant = current_user.restaurant
-      render "index.html.erb"
-    elsif user_signed_in? and current_user.employee.present?
-      @items = current_user.employee.restaurant.items.all.order(:id)
-      @restaurant_menus = current_user.employee.restaurant.restaurant_menus.all.order(:id)
-      @restaurant = current_user.employee.restaurant
-      render "index.html.erb"
-    else
-      redirect_to root_path
-    end
+    @items = current_user.restaurant.items.all.order(:id)
+    @restaurant_menus = current_user.restaurant.restaurant_menus.all.order(:id)
+    @restaurant = current_user.restaurant
+    render "index.html.erb"
   end
 
   private

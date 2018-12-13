@@ -70,3 +70,6 @@ gem 'jquery-rails'
 
 # Image processor, to resize whenever we want to it maaan
 gem 'image_processing', '~> 1.2'
+
+# Annotate, so I dont lose myself to dance
+gem 'annotate'

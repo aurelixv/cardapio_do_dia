@@ -25,8 +25,7 @@ class RestaurantMenusController < ApplicationController
   # POST /restaurant_menus.json
   def create
     @restaurant_menu = RestaurantMenu.new(restaurant_menu_params)
-    @restaurant_menu.restaurant = current_user.restaurant if current_user.manager.present?
-    @restaurant_menu.restaurant = current_user.employee.restaurant if current_user.employee.present?
+    @restaurant_menu.restaurant = current_user.restaurant
 
     respond_to do |format|
       if @restaurant_menu.save

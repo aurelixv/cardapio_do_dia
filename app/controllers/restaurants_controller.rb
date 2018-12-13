@@ -31,16 +31,21 @@ class RestaurantsController < ApplicationController
       flash.now[:notice] = 'Nao pode gerenciar mais de um restaurante.'
       render :new
       return
+    elsif current_user.employee.present?
+      flash.now[:notice] = 'Ja e funcionario em um restaurante.'
+      render :new
+      return
     end
 
     @restaurant = Restaurant.new(restaurant_params)
     manager = Manager.new
+    manager.user = current_user
     @restaurant.manager = manager
     
     respond_to do |format|
       if @restaurant.save
-        current_user.manager = manager
         manager.save
+        current_user.restaurant = @restaurant
         current_user.save
         format.html { redirect_to "/restaurant", notice: 'Restaurante criado com sucesso.' }
         format.json { render :show, status: :created, location: @restaurant }
@@ -77,20 +82,9 @@ class RestaurantsController < ApplicationController
   end
 
   def profile
-    if user_signed_in?
-      if current_user.restaurant.present?
-        @restaurant = current_user.restaurant
-        render :show
-      elsif current_user.employee.present?
-        if current_user.employee.restaurant.present?
-          @restaurant = current_user.employee.restaurant
-          render :show
-        else
-          redirect_to root_path
-        end
-      else
-        redirect_to root_path
-      end
+    if user_signed_in? and current_user.restaurant.present?
+      @restaurant = current_user.restaurant
+      render :show
     else
       redirect_to root_path
     end
@@ -98,8 +92,6 @@ class RestaurantsController < ApplicationController
 
   def book
     @bookings = current_user.restaurant.items.first.bookings
-    p "@" * 200
-    p @bookings
   end
 
   private

@@ -7,11 +7,11 @@
 #  description :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  manager_id  :bigint(8)
 #  telephone   :string
 #  email       :string
 #  address     :string
 #  food_type   :string
+#  manager_id  :integer
 #
 
 require 'test_helper'

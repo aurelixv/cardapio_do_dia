@@ -12,6 +12,7 @@
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
+#  restaurant_id          :bigint(8)
 #
 
 require 'test_helper'

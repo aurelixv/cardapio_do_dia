@@ -7,6 +7,7 @@
 #  updated_at :datetime         not null
 #  comment    :text
 #  item_id    :bigint(8)
+#  user_id    :bigint(8)
 #
 
 require 'test_helper'

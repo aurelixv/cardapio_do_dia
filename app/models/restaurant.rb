@@ -7,18 +7,19 @@
 #  description :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  manager_id  :bigint(8)
 #  telephone   :string
 #  email       :string
 #  address     :string
 #  food_type   :string
+#  manager_id  :integer
 #
 
 class Restaurant < ApplicationRecord
-  has_many :employees
+  has_many :users
   has_many :items
   has_many :restaurant_menus
-  belongs_to :manager
+
+  belongs_to :manager, foreign_key: "manager_id"
 
   validates :name, presence: :true
 end
