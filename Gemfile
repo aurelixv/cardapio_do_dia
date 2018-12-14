@@ -73,3 +73,6 @@ gem 'image_processing', '~> 1.2'
 
 # Annotate, so I dont lose myself to dance
 gem 'annotate'
+
+# Faker to generate fake data xd
+gem 'faker'

@@ -67,8 +67,8 @@ class EmployeesController < ApplicationController
   end
 
   def profile
-    if user_signed_in? and current_user.restaurant.present? and current_user.manager.present?
-      @employees = Employee.all.joins(:user).where(users: { restaurant_id: current_user.restaurant.id })
+    if current_user.restaurant.present? and current_user.manager.present?
+      @employees = Employee.all.joins(:user).where(users: { restaurant_id: current_user.restaurant.id }).order(:id)
       @users = User.all.order(:id)
       render "show.html.erb"
     else
