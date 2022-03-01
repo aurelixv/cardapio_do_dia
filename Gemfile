@@ -69,7 +69,7 @@ gem 'bootstrap'
 gem 'jquery-rails'
 
 # Image processor, to resize whenever we want to it maaan
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.12'
 
 # Annotate, so I dont lose myself to dance
 gem 'annotate'
